@@ -37,11 +37,11 @@ public class Hooks {
         Driver.closeDriver();
     }
 
-    @BeforeStep
+//    @BeforeStep
     public void setUpStep(){
         System.out.println("---->@BeforeStep: RUNNING BEFORE EACH STEP SCENARIO");
     }
-    @AfterStep
+//    @AfterStep
     public void tearDownStep(){
         System.out.println("---->@AfterStep: RUNNING after EACH STEP SCENARIO");
     }
