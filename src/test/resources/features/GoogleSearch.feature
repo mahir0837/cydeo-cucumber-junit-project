@@ -11,3 +11,4 @@ Feature:Google Search functionality
     Given user is on the Google search page
     When user searches for apple
     Then user should see apple in the title
+#    And user sees 3 apples

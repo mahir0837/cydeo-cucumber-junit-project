@@ -3,6 +3,7 @@ package com.cydeo.step_definitions;
 import com.cydeo.pages.GoogleSearchPages;
 import com.cydeo.utitlities.BrowserUtils;
 import com.cydeo.utitlities.Driver;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
@@ -31,14 +32,18 @@ public class Google_StepDefinations {
 
     }
 
-    @When("user searches for apple")
-    public void user_searches_for_apple() {
-        searchPages.searchBox.sendKeys("apple" + Keys.ENTER);
+    @When("user searches for {word}")
+    public void user_searches_for_apple(String keyWord) {
+        searchPages.searchBox.sendKeys(keyWord + Keys.ENTER);
     }
 
-    @Then("user should see apple in the title")
-    public void user_should_see_apple_in_the_title() {
-        BrowserUtils.verifyTitle("apple - Google Search");
+    @Then("user should see {word} in the title")
+    public void user_should_see_apple_in_the_title(String keyWord) {
+        BrowserUtils.verifyTitle(keyWord+" - Google Search");
     }
+
+//    @And("user sees {int} apples")
+//    public void userSeesApples(int arg0) {
+//    }
 
 }
