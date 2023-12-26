@@ -75,4 +75,13 @@ public class BrowserUtils {
 
         return actualMonth_as_STRING;
     }
+    public static List<String> dropdownProduct_as_STRING(WebElement productsInDropdowns) {
+        Select selectProduct=new Select(productsInDropdowns);
+        List<WebElement>products_web_Element=selectProduct.getOptions();
+        List<String>products_String=new ArrayList<>();
+        for (WebElement each : products_web_Element) {
+            products_String.add(each.getText());
+        }
+        return products_String;
+    }
 }
