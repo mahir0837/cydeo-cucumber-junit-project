@@ -84,4 +84,11 @@ public class BrowserUtils {
         }
         return products_String;
     }
+    public static void clickRadioButton(List<WebElement>radioButton,String attributeValue){
+        for (WebElement each : radioButton) {
+            if (each.getAttribute("value").equals(attributeValue)){
+                each.click();
+            }
+        }
+    }
 }

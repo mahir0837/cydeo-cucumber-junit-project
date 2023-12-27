@@ -1,8 +1,11 @@
 package com.cydeo.step_definitions;
 
 import com.cydeo.pages.WebTableLoginPages;
+import com.cydeo.pages.WebTableOrderPages;
+import com.cydeo.pages.WebTableViewAllOrderPage;
 import com.cydeo.utitlities.BrowserUtils;
 import com.cydeo.utitlities.Driver;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -66,15 +69,104 @@ public class WebTableLogin_StepDefinations {
         loginPages.login();
     }
 
+    WebTableOrderPages orderPages = new WebTableOrderPages();
+
     @When("user is on the Order page")
     public void user_is_on_the_order_page() {
-        loginPages.orderButton.click();
+        orderPages.orderLink.click();
+        BrowserUtils.sleep(2);
     }
 
     @Then("user sees bellow options under product dropdown")
-    public void user_sees_bellow_options_under_product_dropdown(List<String> productsInDropdowns) {
+    public void user_sees_bellow_options_under_product_dropdown(List<String> expectedOprions) {
 
-        List<String> productList = BrowserUtils.dropdownProduct_as_STRING(loginPages.dropdownProduct);
-        Assert.assertEquals(productsInDropdowns, productList);
+        List<String> actualOptions = BrowserUtils.dropdownOptions_as_STRING(orderPages.webElementProductDropdown);
+        Assert.assertEquals(expectedOprions, actualOptions);
+    }
+
+    @Then("user sees VISA as enabled payment options")
+    public void userSeesVISAAsEnabledPaymentOptions() {
+        Assert.assertTrue(orderPages.visaRadioButton.isEnabled());
+    }
+
+    @Then("user sees Master Card as enabled payment options")
+    public void userSeesMasterCardAsEnabledPaymentOptions() {
+        Assert.assertTrue(orderPages.masterCardRadioButton.isEnabled());
+    }
+
+    @Then("user sees American Express as enabled payment options")
+    public void userSeesAmericanExpressAsEnabledPaymentOptions() {
+        Assert.assertTrue(orderPages.americanExpressRadioButton.isEnabled());
+    }
+
+    @Given("user is already logged in to The Web table app")
+    public void userIsAlreadyLoggedInToTheWebTableApp() {
+        Driver.getDriver().get("https://web-table-2.cydeo.com/login");
+        loginPages.login();
+        orderPages.orderLink.click();
+
+
+    }
+
+    @And("user enters quantity {string}")
+    public void userEntersQuantity(String qty) {
+        orderPages.quantity.sendKeys(qty);
+    }
+
+    @Then("user clicks to the calculate button")
+    public void userClicksToTheCalculateButton() {
+        orderPages.calculateButton.click();
+    }
+
+    @And("user enters customer name {string}")
+    public void userEntersCustomerName(String customerName) {
+        orderPages.customerName.sendKeys(customerName);
+    }
+
+    @And("user enters street {string}")
+    public void userEntersStreet(String street) {
+        orderPages.street.sendKeys(street);
+    }
+
+    @And("user enters city {string}")
+    public void userEntersCity(String city) {
+        orderPages.city.sendKeys(city);
+    }
+
+    @And("user enters state {string}")
+    public void userEntersState(String state) {
+        orderPages.state.sendKeys(state);
+    }
+
+    @And("user enters zip {string}")
+    public void userEntersZip(String zip) {
+        orderPages.zipCode.sendKeys(zip);
+    }
+
+    @And("user selects payment option {string}")
+    public void userSelectsPaymentOption(String Visa) {
+        BrowserUtils.clickRadioButton(orderPages.cardTypeRadio, Visa);
+    }
+
+    @And("user enters credit card number {string}")
+    public void userEntersCreditCardNumber(String cardNumber) {
+        orderPages.cardNo.sendKeys(cardNumber);
+    }
+
+    @And("user enters expiration date {string}")
+    public void userEntersExpirationDate(String expDate) {
+        orderPages.expDate.sendKeys(expDate);
+    }
+
+    @And("user clicks to process order button")
+    public void userClicksToProcessOrderButton() {
+        orderPages.processButton.click();
+    }
+
+    WebTableViewAllOrderPage allOrder = new WebTableViewAllOrderPage();
+
+    @Then("user should see {string} in the first row of the web table")
+    public void userShouldSeeInTheFirstRowOfTheWebTable(String expectedName) {
+        Assert.assertEquals(allOrder.newCustomerCell.getText(),expectedName);
     }
 }
