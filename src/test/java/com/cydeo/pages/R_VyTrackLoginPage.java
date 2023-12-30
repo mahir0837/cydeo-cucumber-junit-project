@@ -21,6 +21,8 @@ public class R_VyTrackLoginPage {
     @FindBy(id = "_submit")
     public WebElement loginBtn;
 
+    @FindBy(xpath = "//div[.='Invalid user name or password.']")
+    public WebElement loginErrorMessage;
 
     public void login(String username,String password){
         usernameInput.sendKeys(username);
