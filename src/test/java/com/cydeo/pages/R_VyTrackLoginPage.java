@@ -8,22 +8,35 @@ import org.openqa.selenium.support.PageFactory;
 
 public class R_VyTrackLoginPage {
 
-    public R_VyTrackLoginPage() {
+    public R_VyTrackLoginPage(){
         PageFactory.initElements(Driver.getDriver(),this);
     }
 
-    @FindBy(xpath = "//input[@id='prependedInput']")
+    @FindBy(id = "prependedInput")
     public WebElement usernameInput;
 
-    @FindBy(css = "input#prependedInput2")
+    @FindBy(id = "prependedInput2")
     public WebElement passwordInput;
 
     @FindBy(id = "_submit")
-    public WebElement signInInput;
+    public WebElement loginBtn;
+
 
     public void login(String username,String password){
         usernameInput.sendKeys(username);
         passwordInput.sendKeys(password);
-        signInInput.click();
+        loginBtn.click();
+    }
+
+
+    public void login(String userType){
+
+        userType= userType.replace(" ","_");
+
+        String username = ConfigurationReader.getProperty(userType + "_username");
+        String password = ConfigurationReader.getProperty(userType + "_password");
+
+        login(username,password);
+
     }
 }
